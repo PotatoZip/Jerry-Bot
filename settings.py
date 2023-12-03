@@ -2,6 +2,7 @@ import os
 import logging
 from dotenv import load_dotenv
 from logging.config import dictConfig
+import discord
 
 load_dotenv()
 
@@ -23,31 +24,31 @@ LOGGING_CONFIG = {
     },
     "handlers": {
         "console": {
-            'level': "DEBUG",
-            'class': "logging.StreamHandler",
-            'formatter': "standard"
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
         },
         "console2": {
-            'level': "WARNING",
-            'class': "logging.StreamHandler",
-            'formatter': "standard"
+            "level": "WARNING",
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
         },
         "file": {
-            'level': "INFO",
-            'class': "logging.StreamHandler",
-            'filename': "logs/infos.log",
-            'mode': "w",
-            'formatter': "verbose"
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "logs/infos.log",
+            "mode": "w",
+            "formatter": "verbose"
         },
     },
     "loggers": { 
         "bot": {
-            'handlers': ['console'],
+            "handlers": ["console"],
             "level": "INFO",
             "propagate": False
         },
         "discord": {
-            'handlers': ['console2', "file"],
+            "handlers": ["console2", "file"],
             "level": "INFO",
             "propagate": False
         }
