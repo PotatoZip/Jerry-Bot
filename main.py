@@ -35,6 +35,15 @@ def run():
         '''
         await ctx.send(f"User joined: {str(joined_time)}\nNow is: {current_time}")
 
+    @bot.event
+    async def on_command_error(ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Something wrong happend:")
+    
+    @joined.error
+    async def add_error(ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("I lookes like you entered wrong argument")
 
     bot.run(settings.DISCORD_API_SECRET, root_logger=True)
 
