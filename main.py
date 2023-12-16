@@ -3,6 +3,7 @@ import logging
 import discord
 from discord.ext import commands
 from datetime import datetime, timedelta, timezone
+from cogs.commands import Commands
 
 logger = settings.logging.getLogger("bot")
 
@@ -11,40 +12,26 @@ def run():
     intents.message_content = True
 
     bot = commands.Bot(command_prefix="*", intents=intents)
+
     @bot.event
     async def on_ready():
         logger.info(f"User: {bot.user} (ID: {bot.user.id})")
 
-    @bot.command()
-    async def ping(ctx):
-        await ctx.send("Wiktor super gość")
-    
-    @bot.command()
-    async def joined(ctx, user : discord.Member):
-        joined_time = str(user.joined_at)
-        joined_time = joined_time[:-6]
-        current_time = str(datetime.utcnow())
-        current_time = current_time[:-1]
-        #diff = current_time - joined_time
-        '''
-        difference = current_time - joined_time
-        days, seconds = divmod(difference.total_seconds(), 86400)
-        hours, seconds = divmod(seconds, 3600)
-        minutes, seconds = divmod(seconds, 60)
-        duration = f"{int(days)} days, {int(hours)} hours, {int(minutes)} minutes, {int(seconds)}, seconds"
-        '''
-        await ctx.send(f"User joined: {str(joined_time)}\nNow is: {current_time}")
+        await bot.load_extension("cogs.commands")
 
+        # for cmd_file in settings.CMDS_DIR.glob("*.py"):
+        #     if cmd_file.name != "__init__.py":
+        #         await bot.load_extension(f"cmds.{cmd_file.name[:-3]}")
+
+        # for cog_file in settings.COGS_DIR.glob("*.py"):
+        #     if cog_file.name != "__init__.py":
+        #         await bot.load_extension(f"cogs.{cog_file.name[:-3]}")
+    
     @bot.event
     async def on_command_error(ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("Something wrong happend:")
-    
-    @joined.error
-    async def add_error(ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("I lookes like you entered wrong argument")
-
+            await ctx.send("Error")
+        
     bot.run(settings.DISCORD_API_SECRET, root_logger=True)
 
 if __name__ == "__main__":
