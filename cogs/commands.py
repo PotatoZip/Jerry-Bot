@@ -30,12 +30,8 @@ class Commands(commands.Cog):
             days %= 12
             years -= 1
 
-        await ctx.send(f"This user is with us:\n{days} days\n{months} months\n{years} years\nJoined date: {user.joined_at}\n")
-
-    @joined.error
-    async def add_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("I lookes like you entered wrong argument")
+        joined_time = str(user.joined_at)[:-13]
+        await ctx.send(f"This user is with us:\n{days} days, {months} months, {years} years\nJoined date: {joined_time}\n")
 
 async def setup(bot):
     await bot.add_cog(Commands(bot))

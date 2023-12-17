@@ -17,20 +17,21 @@ def run():
     async def on_ready():
         logger.info(f"User: {bot.user} (ID: {bot.user.id})")
 
-        await bot.load_extension("cogs.commands")
+        # await bot.load_extension("cogs.commands")
+        # await bot.load_extension("cogs.help")
 
         # for cmd_file in settings.CMDS_DIR.glob("*.py"):
         #     if cmd_file.name != "__init__.py":
         #         await bot.load_extension(f"cmds.{cmd_file.name[:-3]}")
 
-        # for cog_file in settings.COGS_DIR.glob("*.py"):
-        #     if cog_file.name != "__init__.py":
-        #         await bot.load_extension(f"cogs.{cog_file.name[:-3]}")
+        for cog_file in settings.COGS_DIR.glob("*.py"):
+            if cog_file.name != "__init__.py":
+                await bot.load_extension(f"cogs.{cog_file.name[:-3]}")
     
     @bot.event
     async def on_command_error(ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("Error")
+            await ctx.send("ERROR\nIt looks like you entered something wrong, fix it!")
         
     bot.run(settings.DISCORD_API_SECRET, root_logger=True)
 
