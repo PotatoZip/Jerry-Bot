@@ -16,6 +16,7 @@ def run():
     @bot.event
     async def on_ready():
         logger.info(f"User: {bot.user} (ID: {bot.user.id})")
+        logger.info(f"Guild ID: {bot.guilds[0].id}")
 
         # await bot.load_extension("cogs.commands")
         # await bot.load_extension("cogs.help")

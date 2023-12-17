@@ -16,6 +16,8 @@ COGS_DIR = BASE_DIR / "cogs"
 
 AUTHOR_NAME = "PotatoZip"
 
+GUILD_ID = discord.Object(id=int(os.getenv("GUILD")))
+
 '''
 if DISCORD_API_SECRET is None:
     raise ValueError("DISCORD_API_TOKEN is not set in the environment.")
